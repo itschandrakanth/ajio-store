@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'John Players Blue Jeans',
     image: '/images/jeans.webp',
     description:
@@ -13,7 +12,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '2',
     name: 'CNY Logo Print Polo T-shirt',
     image: '/images/tshirt.webp',
     description:
@@ -26,7 +24,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '3',
     name: 'Code Quilted Slim Fit Puffer Jacket',
     image: '/images/jacket.webp',
     description:
@@ -39,7 +36,6 @@ const products = [
     numReviews: 3,
   },
   {
-    _id: '4',
     name: 'Brand Print Round-Neck Sweatshirt',
     image: '/images/sweatshirt.jpeg',
     description:
@@ -52,7 +48,6 @@ const products = [
     numReviews: 3,
   },
   {
-    _id: '5',
     name: 'Concave Run IDP Colourblock Running Shoes',
     image: '/images/shoes.webp',
     description:
@@ -65,7 +60,6 @@ const products = [
     numReviews: 2,
   },
   {
-    _id: '6',
     name: 'Spirit Icon Hooded Zip-Front Puffer Jacket',
     image: '/images/jacket2.webp',
     description:
