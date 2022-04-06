@@ -14,7 +14,7 @@ function CartScreen({ match, location, history }) {
  
   const dispatch = useDispatch()
  
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
  
   useEffect(() => {

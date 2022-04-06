@@ -11,6 +11,7 @@ dotenv.config()
 connectDB()
 
 const app = express()
+app.use(express.json()) // accept json
 
 app.get('/', (req, res) => {
   res.send('API is running....')
