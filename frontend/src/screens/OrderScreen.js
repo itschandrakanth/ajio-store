@@ -24,6 +24,8 @@ function OrderScreen({ match, history }) {
     const { loading: loadingPay, success: successPay, error: errorPay } = orderPay
 
     // order delivery updates
+    const orderDeliver = useSelector((state) => state.orderDeliver)
+    const { loading: loadingDeliver, success: successDeliver, error: errorDeliver } = orderDeliver
 
 
 
@@ -60,7 +62,7 @@ function OrderScreen({ match, history }) {
 
         if(!order || successPay || successDeliver || order._id !== orderId) {
             dispatch({ type: ORDER_PAY_RESET })
-            // dispatch({ type: ORDER_DELIVER_RESET })
+            dispatch({ type: ORDER_DELIVER_RESET })
             dispatch(getOrderDetails(orderId))
         } else if (!order.isPaid) {
             if (!window.paypal) {
@@ -77,9 +79,9 @@ function OrderScreen({ match, history }) {
         dispatch(payOrder(orderId, paymentResult))
     }
 
-    // const deliverHandler = () => {
-    //     dispatch(deliverOrder(order))
-    // }
+    const deliverHandler = () => {
+        dispatch(deliverOrder(order))
+    }
 
   return loading ? (
     <Loader />
@@ -128,9 +130,94 @@ function OrderScreen({ match, history }) {
                         ) }
                     </ListGroup.Item>
 
+                    {/* ------------ */}
+                    <ListGroup.Item>
+                        <h2>Order Items</h2>
+                        {order.orderItems.length === 0 ? (
+                            <Message variant="danger">No Order Items</Message>
+                        ) : (
+                            <ListGroup variant='flush'>
+                                {order.orderItems.map((item, index) => (
+                                    <ListGroup.Item key={index}>
+                                    <Row>
+                                        <Col md={1}>
+                                            <Image src={item.image} alt={item.name} fluid rounded />
+                                        </Col>
+                                        <Col>
+                                            <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                        </Col>
+                                        <Col md={4}>
+                                            {item.qty} x {item.price} = ₹ {item.qty * item.price}
+                                        </Col>
+                                    </Row>
+                                </ListGroup.Item>
+                                ))}
+                                
+                            </ListGroup>
+                        )}
+                    </ListGroup.Item>    
                 </ListGroup>
             </Col>
-            <Col md={4}></Col>
+            <Col md={4}>
+                <Card>
+                    <ListGroup variant='flush'>
+                        <ListGroup.Item>
+                            <h2>Order Summary</h2>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>Items</Col>
+                                <Col> ₹ {order.itemsPrice}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>Shipping</Col>
+                                <Col> ₹ {order.shippingPrice}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>Tax</Col>
+                                <Col> ₹ {order.taxPrice}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>Total</Col>
+                                <Col> ₹ {order.totalPrice}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
+                        {!order.isPaid && (
+                            <ListGroup.Item>
+                                {loadingPay && <Loader />}
+                                {!sdkReady ? (
+                                    <Loader />
+                                ) : (
+                                    <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
+                                )}
+                            </ListGroup.Item>
+                        )}
+
+                        {loadingDeliver && <Loader />}
+                        {userInfo && 
+                            userInfo.isAdmin && 
+                            order.isPaid && 
+                            !order.isDelivered && (
+                                <ListGroup.Item>
+                                    <Button type='button' className='btn btn-block' onClick={deliverHandler}>Mark as Delivered</Button>
+                                </ListGroup.Item>    
+                            )
+                        
+                        }
+
+                    </ListGroup>
+                </Card>
+            </Col>
         </Row>
 
       </>
