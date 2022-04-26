@@ -125,7 +125,7 @@ export const listUsers = () => async (dispatch, getState) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json',
+                
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
@@ -178,7 +178,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const { data } = await axios.put(`/api/users/${user._id}`, config)
+        const { data } = await axios.put(`/api/users/${user._id}`,user, config)
         dispatch({ type: USER_UPDATE_SUCCESS })
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
         dispatch({ type: USER_DETAILS_RESET })
