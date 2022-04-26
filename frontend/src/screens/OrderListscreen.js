@@ -2,7 +2,6 @@
 import React ,{useEffect} from 'react'
 import {LinkContainer} from 'react-router-bootstrap'
 import {Table,Button} from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
 import {useDispatch,useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -46,11 +45,11 @@ function OrderListscreen({ history}) {
                   <tr key={order._id}>
                       <td>{order._id}</td>
                       <td>{order.user && order.user.name}</td>
-                      <td>{order.createdAt.subString(1,10)}</td>
+                      <td>{order.createdAt.substring(1,10)}</td>
                       <td>{order.totalPrice}</td>
                       <td>
                           {order.isPaid ? (
-                              order.paidAt.subString(1,10)
+                              order.paidAt.substring(1,10)
                           ) : (
                               <i className="fa fa-times" style={{color:'red'}}></i>
                           

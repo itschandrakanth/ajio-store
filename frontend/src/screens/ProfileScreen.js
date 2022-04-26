@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 function ProfileScreen({ history, location }) {
@@ -35,6 +36,7 @@ function ProfileScreen({ history, location }) {
             if(!user || !user.name || success) {
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
+                dispatch(listMyOrders())
             } else {
                 setName(user.name)
                 setEmail(user.email)
